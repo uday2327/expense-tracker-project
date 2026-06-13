@@ -1,14 +1,38 @@
 {
   "name": "shared-expenses-app",
   "private": true,
-  "workspaces": [
-    "backend",
-    "frontend"
-  ],
+  "type": "module",
   "scripts": {
-    "dev": "npm run dev --workspace backend",
-    "build": "npm run build --workspaces",
-    "lint": "npm run lint --workspaces"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "node scripts/check-no-typescript.js",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "seed": "node prisma/seed.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.10.1",
+    "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-slot": "^1.2.3",
+    "bcryptjs": "^3.0.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "csv-parse": "^5.6.0",
+    "jsonwebtoken": "^9.0.2",
+    "lucide-react": "^0.468.0",
+    "next": "^15.1.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^2.6.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "postcss": "^8.4.49",
+    "prisma": "^6.10.1",
+    "tailwindcss": "^3.4.17"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
   }
 }
-
