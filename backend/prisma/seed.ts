@@ -12,6 +12,8 @@ const users = [
   { name: "Sam", email: "sam@example.com", password: "Sam@123" }
 ];
 
+const sharedFlatGroupId = "00000000-0000-4000-8000-000000000001";
+
 async function main() {
   for (const user of users) {
     const passwordHash = await bcrypt.hash(user.password, 10);
@@ -24,9 +26,9 @@ async function main() {
   }
 
   const group = await prisma.group.upsert({
-    where: { id: "shared-flat-2024" },
+    where: { id: sharedFlatGroupId },
     update: { name: "Shared Flat 2024" },
-    create: { id: "shared-flat-2024", name: "Shared Flat 2024" }
+    create: { id: sharedFlatGroupId, name: "Shared Flat 2024" }
   });
 
   const userByName = new Map(
@@ -73,4 +75,3 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
-
