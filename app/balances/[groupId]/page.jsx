@@ -1,12 +1,23 @@
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { AppShell } from "@/components/AppShell";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { authCookieName, getUserFromToken } from "@/lib/auth";
+import { assertGroupAccess } from "@/lib/services/authorization.service";
 import { getBalanceSummary } from "@/lib/services/balance.service";
 
 export const dynamic = "force-dynamic";
 
 export default async function BalancePage({ params }) {
+  const cookieStore = await cookies();
+  const user = getUserFromToken(cookieStore.get(authCookieName)?.value);
+  if (!user) {
+    redirect("/login");
+  }
+
   const groupId = (await params).groupId;
+  await assertGroupAccess(user.id, groupId);
   const balances = await getBalanceSummary(groupId);
 
   return (

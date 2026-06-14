@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   darkMode: ["class"],
   content: [
     "./app/**/*.{js,jsx}",
@@ -33,4 +33,3 @@ module.exports = {
   },
   plugins: []
 };
-

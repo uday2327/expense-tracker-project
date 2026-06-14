@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { requireUser } from "@/lib/auth";
 import { handleApiError, json } from "@/lib/http";
+import { assertGroupAccess } from "@/lib/services/authorization.service";
 import { confirmImport } from "@/lib/services/import.service";
 
 const confirmSchema = z.object({
@@ -12,6 +13,7 @@ export async function POST(request, { params }) {
     const user = requireUser(request);
     const sessionId = z.string().uuid().parse((await params).sessionId);
     const body = confirmSchema.parse(await request.json());
+    await assertGroupAccess(user.id, body.groupId);
     const result = await confirmImport({
       sessionId,
       groupId: body.groupId,
@@ -23,4 +25,3 @@ export async function POST(request, { params }) {
     return handleApiError(error);
   }
 }
-

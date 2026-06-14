@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/db";
-import { publicUser, signAuthToken } from "@/lib/auth";
+import { publicUser, setAuthCookie, signAuthToken } from "@/lib/auth";
 import { handleApiError, json } from "@/lib/http";
 import { loginSchema } from "@/lib/validators/auth";
 
@@ -19,9 +19,11 @@ export async function POST(request) {
     }
 
     const safeUser = publicUser(user);
-    return json({ user: safeUser, token: signAuthToken(safeUser) });
+    const token = signAuthToken(safeUser);
+    const response = json({ user: safeUser, token });
+    setAuthCookie(response, token);
+    return response;
   } catch (error) {
     return handleApiError(error);
   }
 }
-

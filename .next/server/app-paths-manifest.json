@@ -1,1 +1,23 @@
-{}
+{
+  "/api/auth/login/route": "app/api/auth/login/route.js",
+  "/api/auth/logout/route": "app/api/auth/logout/route.js",
+  "/api/auth/register/route": "app/api/auth/register/route.js",
+  "/api/balances/[groupId]/route": "app/api/balances/[groupId]/route.js",
+  "/api/expenses/[id]/route": "app/api/expenses/[id]/route.js",
+  "/api/groups/[id]/expenses/route": "app/api/groups/[id]/expenses/route.js",
+  "/api/groups/[id]/members/route": "app/api/groups/[id]/members/route.js",
+  "/api/auth/me/route": "app/api/auth/me/route.js",
+  "/api/groups/route": "app/api/groups/route.js",
+  "/api/import/[sessionId]/confirm/route": "app/api/import/[sessionId]/confirm/route.js",
+  "/api/import/[sessionId]/reject/route": "app/api/import/[sessionId]/reject/route.js",
+  "/api/import/[sessionId]/report/route": "app/api/import/[sessionId]/report/route.js",
+  "/api/settlements/route": "app/api/settlements/route.js",
+  "/api/import/route": "app/api/import/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/login/page": "app/login/page.js",
+  "/import/page": "app/import/page.js",
+  "/page": "app/page.js",
+  "/balances/[groupId]/page": "app/balances/[groupId]/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/groups/[id]/page": "app/groups/[id]/page.js"
+}

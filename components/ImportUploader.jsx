@@ -54,6 +54,27 @@ export function ImportUploader({ defaultGroupId }) {
     setMessage(response.ok ? "Import rejected" : data.message);
   }
 
+  async function downloadReport() {
+    if (!result?.session?.id) return;
+
+    const response = await fetch(`/api/import/${result.session.id}/report`, {
+      headers: authHeaders()
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      setMessage(data.message || "Report download failed");
+      return;
+    }
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `import-report-${result.session.id}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <div className="space-y-4">
       <Card>
@@ -71,12 +92,15 @@ export function ImportUploader({ defaultGroupId }) {
               <h2 className="text-lg font-semibold">Anomaly Review</h2>
               {result.session?.status ? <p className="text-sm text-muted-foreground">Status: {result.session.status}</p> : null}
             </div>
-            {result.session?.status === "PENDING_REVIEW" ? (
-              <div className="flex gap-2">
-                <Button variant="secondary" onClick={reject}>Reject</Button>
-                <Button onClick={confirm}>Confirm Import</Button>
-              </div>
-            ) : null}
+            <div className="flex gap-2">
+              <Button variant="secondary" onClick={downloadReport}>Download Report</Button>
+              {result.session?.status === "PENDING_REVIEW" ? (
+                <>
+                  <Button variant="secondary" onClick={reject}>Reject</Button>
+                  <Button onClick={confirm}>Confirm Import</Button>
+                </>
+              ) : null}
+            </div>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
